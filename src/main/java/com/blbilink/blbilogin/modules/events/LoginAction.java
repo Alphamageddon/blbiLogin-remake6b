@@ -2,9 +2,9 @@ package com.blbilink.blbilogin.modules.events;
 
 import com.blbilink.blbilogin.BlbiLogin;
 import com.blbilink.blbilogin.vars.Configvar;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.entity.Player;
 import org.bukkit.Sound;
+import org.bukkit.Location;
 import com.blbilink.blbilogin.modules.Sqlite;
 import static com.blbilink.blbilogin.BlbiLogin.plugin;
 

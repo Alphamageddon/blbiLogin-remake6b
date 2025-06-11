@@ -53,10 +53,10 @@ public class Tpa implements CommandExecutor {
         }
         if(req.here){
             Location loc = requester.getLocation();
-            plugin.foliaUtil.runTask(target, task -> target.teleport(loc));
+            plugin.foliaUtil.runTask(plugin, task -> target.teleport(loc));
         }else{
             Location loc = target.getLocation();
-            plugin.foliaUtil.runTask(requester, task -> requester.teleport(loc));
+            plugin.foliaUtil.runTask(plugin, task -> requester.teleport(loc));
         }
         Configvar.tpaRequests.remove(req.target);
     }
