@@ -23,7 +23,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@417ae3ccd767c252f5661f1ace9f835f9654f2b5 # v3.1.0
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Verify local dependencies
         run: |
@@ -46,17 +46,6 @@ jobs:
           SHORT_SHA=$(git rev-parse --short HEAD)
           echo "VERSION=${TIMESTAMP}-${SHORT_SHA}" >> $GITHUB_OUTPUT
 
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: release-${{ steps.generate_version.outputs.VERSION }}
-          release_name: Canary ${{ steps.generate_version.outputs.VERSION }}
-          draft: false
-          prerelease: false
-
       - name: Rename JAR file
         run: |
           JAR_FILE=$(find ./build/libs -name "*.jar" -type f | head -n 1)
@@ -65,12 +54,13 @@ jobs:
           echo "JAR_PATH=./build/libs/$NEW_NAME" >> $GITHUB_ENV
           echo "JAR_NAME=$NEW_NAME" >> $GITHUB_ENV
 
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ env.JAR_PATH }}
-          asset_name: ${{ env.JAR_NAME }}
-          asset_content_type: application/java-archive
+          tag_name: release-${{ steps.generate_version.outputs.VERSION }}
+          name: Canary ${{ steps.generate_version.outputs.VERSION }}
+          draft: false
+          prerelease: false
+          files: ${{ env.JAR_PATH }}
