@@ -1,7 +1,10 @@
 package com.blbilink.blbilogin.modules;
 
 
+import com.blbilink.blbilogin.BlbiLogin;
 import com.blbilink.blbilogin.load.LoadFunction;
+
+import java.io.File;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -12,17 +15,23 @@ import java.sql.SQLException;
 public class Sqlite {
 
     private Connection connection;
+    private final BlbiLogin plugin;
 
     public static Sqlite getSqlite() {
         return LoadFunction.sqlite;
     }
-    public Sqlite() {
+
+    public Sqlite(BlbiLogin plugin) {
+        this.plugin = plugin;
         try {
-            connection = DriverManager.getConnection("jdbc:sqlite:plugins/blbiLogin/players.db");
+            File dbFile = new File(plugin.getDataFolder(), "players.db");
+            dbFile.getParentFile().mkdirs();
+            connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getPath());
             try (PreparedStatement statement = connection.prepareStatement("CREATE TABLE IF NOT EXISTS players (uuid TEXT PRIMARY KEY, username TEXT, password TEXT)")) {
                 statement.executeUpdate();
             }
         } catch (SQLException e) {
+            plugin.getLogger().severe("Failed to initialize sqlite database");
             e.printStackTrace();
         }
     }

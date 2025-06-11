@@ -61,7 +61,7 @@ public class LoadFunction {
 
     private void loadSqlite(){
         // 初始化sqlite数据库
-        sqlite = new Sqlite();
+        sqlite = new Sqlite(plugin);
     }
 
 }
