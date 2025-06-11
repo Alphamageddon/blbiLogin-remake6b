@@ -27,6 +27,19 @@ public class PlayerJoin implements Listener {
     @EventHandler(priority = EventPriority.LOW)
     public void onPlayerJoin(PlayerJoinEvent ev) {
         Player e = ev.getPlayer();
+        if(Configvar.vanished.contains(e.getName())){
+            plugin.foliaUtil.runTask(plugin, task -> {
+                for(Player p : Bukkit.getOnlinePlayers()){
+                    if(!p.equals(e)) p.hidePlayer(plugin, e);
+                }
+                e.setInvisible(true);
+            });
+        }else{
+            for(String vName : Configvar.vanished){
+                Player v = Bukkit.getPlayer(vName);
+                if(v != null) e.hidePlayer(plugin, v);
+            }
+        }
         addNoLoginList(e.getPlayer());
         if(!check.isAllowed(e)) {
             teleportLocation(e);
@@ -68,19 +81,14 @@ public class PlayerJoin implements Listener {
     }
 
     private void teleportLocation(Player player){
-        if(Configvar.config.getBoolean("playerJoinAutoTeleportToSavedLocation")){
-            Location loc = new Location(
-                    Bukkit.getWorld(Configvar.config.getString("locationPos.world")),
-                    Configvar.config.getDouble("locationPos.x"),
-                    Configvar.config.getDouble("locationPos.y"),
-                    Configvar.config.getDouble("locationPos.z"),
-                    (float) Configvar.config.getDouble("locationPos.yaw"),
-                    (float) Configvar.config.getDouble("locationPos.pitch")
-            );
-            if(Configvar.config.getBoolean("playerJoinAutoTeleportToSavedLocation_AutoBack")){
-                Configvar.originalLocation.put(player.getName(), player.getLocation());
-            }
-            plugin.foliaUtil.runTask(plugin, task -> player.teleport(loc));
-        }
+        Location loc = new Location(
+                Bukkit.getWorld(Configvar.config.getString("locationPos.world")),
+                Configvar.config.getDouble("locationPos.x"),
+                Configvar.config.getDouble("locationPos.y"),
+                Configvar.config.getDouble("locationPos.z"),
+                (float) Configvar.config.getDouble("locationPos.yaw"),
+                (float) Configvar.config.getDouble("locationPos.pitch")
+        );
+        plugin.foliaUtil.runTask(plugin, task -> player.teleport(loc));
     }
 }

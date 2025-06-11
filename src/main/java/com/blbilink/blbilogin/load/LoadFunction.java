@@ -6,6 +6,11 @@ import com.blbilink.blbilogin.modules.commands.BlbiLoginCommand;
 import com.blbilink.blbilogin.modules.commands.Login;
 import com.blbilink.blbilogin.modules.commands.Register;
 import com.blbilink.blbilogin.modules.commands.ResetPassword;
+import com.blbilink.blbilogin.modules.commands.Stats;
+import com.blbilink.blbilogin.modules.commands.Tpa;
+import com.blbilink.blbilogin.modules.commands.TpaCancel;
+import com.blbilink.blbilogin.modules.commands.TpaDecline;
+import com.blbilink.blbilogin.modules.commands.Vanish;
 import com.blbilink.blbilogin.modules.events.PlayerJoin;
 import com.blbilink.blbilogin.modules.events.PlayerSendMessage;
 import com.blbilink.blbilogin.modules.events.PlayerUseCommands;
@@ -37,6 +42,12 @@ public class LoadFunction {
         Objects.requireNonNull(plugin.getCommand("register")).setExecutor(new Register());
         Objects.requireNonNull(plugin.getCommand("login")).setExecutor(new Login());
         Objects.requireNonNull(plugin.getCommand("resetpassword")).setExecutor(new ResetPassword());
+        Objects.requireNonNull(plugin.getCommand("stats")).setExecutor(new Stats());
+        Objects.requireNonNull(plugin.getCommand("tpa")).setExecutor(new Tpa());
+        Objects.requireNonNull(plugin.getCommand("tpahere")).setExecutor(new Tpa());
+        Objects.requireNonNull(plugin.getCommand("tpacancel")).setExecutor(new TpaCancel());
+        Objects.requireNonNull(plugin.getCommand("tpadecline")).setExecutor(new TpaDecline());
+        Objects.requireNonNull(plugin.getCommand("vanish")).setExecutor(new Vanish());
     }
     private void loadListeners(){
         // 注册Bukkit事件监听器

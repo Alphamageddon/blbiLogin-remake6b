@@ -1,5 +1,5 @@
-# blbiLogin 配置文件
-# blbiLogin Configuration File
+# 6b6tLogin 配置文件
+# 6b6tLogin Configuration File
 
 # 配置文件版本号，请勿修改
 # Configuration file version, do not modify
@@ -7,7 +7,7 @@ version: 2.1.1
 
 # 插件消息前缀
 # Plugin message prefix
-prefix: "§8[§fblbi§bLogin§8] §f"
+prefix: "§8[§f6b6t§bLogin§8] §f"
 
 # 插件语言设置
 # Plugin language setting
@@ -20,8 +20,8 @@ language: zh_CN
 # Whether to automatically teleport players to a preset location upon joining
 playerJoinAutoTeleportToSavedLocation: false
 
-# 预设位置坐标（使用 /blbilogin savelocation 命令设置）
-# Preset location coordinates (set using /blbilogin savelocation command)
+# 预设位置坐标（使用 /6b6tlogin savelocation 命令设置）
+# Preset location coordinates (set using /6b6tlogin savelocation command)
 locationPos:
   world: ""  # 世界名称 | World name
   x: 0.0     # X 坐标 | X coordinate

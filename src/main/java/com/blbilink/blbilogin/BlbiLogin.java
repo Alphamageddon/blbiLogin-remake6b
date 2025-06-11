@@ -48,7 +48,7 @@ public final class BlbiLogin extends JavaPlugin implements Listener {
         // 打印 Logo
         getLogger().info(TextUtil.getLogo(
                 "Loading...",
-                "BLBILOGIN",
+                "6B6T",
                 "SpigotMC: https://www.spigotmc.org/resources/117672/",
                 plugin,
                 Arrays.asList("EggFine","ImFoxerARG"),
@@ -68,7 +68,7 @@ public final class BlbiLogin extends JavaPlugin implements Listener {
         // 打印 Logo
         getLogger().info(TextUtil.getLogo(
                 "Disabling...",
-                "BLBILOGIN",
+                "6B6T",
                 "SpigotMC: https://www.spigotmc.org/resources/117672/",
                 plugin,
                 List.of("EggFine"),
