@@ -1,4 +1,4 @@
-name: Java CI with Gradle and Dynamic Release
+name: Gradle Build
 
 on:
   push:
@@ -7,8 +7,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write  # This is required for creating releases
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,28 +35,8 @@ jobs:
           chmod +x ./gradlew
           ./gradlew build
 
-      - name: Generate Version
-        id: generate_version
-        run: |
-          TIMESTAMP=$(date +'%Y%m%d%H%M%S')
-          SHORT_SHA=$(git rev-parse --short HEAD)
-          echo "VERSION=${TIMESTAMP}-${SHORT_SHA}" >> $GITHUB_OUTPUT
-
-      - name: Rename JAR file
-        run: |
-          JAR_FILE=$(find ./build/libs -name "*.jar" -type f | head -n 1)
-          NEW_NAME=$(basename $JAR_FILE .jar)-${{ steps.generate_version.outputs.VERSION }}.jar
-          mv $JAR_FILE ./build/libs/$NEW_NAME
-          echo "JAR_PATH=./build/libs/$NEW_NAME" >> $GITHUB_ENV
-          echo "JAR_NAME=$NEW_NAME" >> $GITHUB_ENV
-
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
-          tag_name: release-${{ steps.generate_version.outputs.VERSION }}
-          name: Canary ${{ steps.generate_version.outputs.VERSION }}
-          draft: false
-          prerelease: false
-          files: ${{ env.JAR_PATH }}
+          name: plugin
+          path: build/libs/*.jar
