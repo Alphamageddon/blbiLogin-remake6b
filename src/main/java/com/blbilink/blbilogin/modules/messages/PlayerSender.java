@@ -68,6 +68,11 @@ public class PlayerSender implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent ev) {
         Player e = ev.getPlayer();
+        Configvar.logoutLocation.put(e.getName(), e.getLocation());
+        Configvar.loginTime.remove(e.getName());
+        Configvar.lastMessage.remove(e.getName());
+        Configvar.sameMessageCount.remove(e.getName());
+        Configvar.vanished.remove(e.getName());
         if (Configvar.noLoginPlayerList.contains(e.getName())) {
             Configvar.noLoginPlayerList.remove(e.getName());
         }

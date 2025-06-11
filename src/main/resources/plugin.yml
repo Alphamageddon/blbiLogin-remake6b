@@ -1,4 +1,4 @@
-name: blbiLogin
+name: 6b6tLogin
 version: '${version}'
 main: com.blbilink.blbilogin.BlbiLogin
 api-version: '1.20'
@@ -25,3 +25,21 @@ commands:
       - resetpasswd
       - resetpass
       - resetpw
+  stats:
+    description: "查看服务器统计"
+    usage: /stats
+  tpa:
+    description: "请求传送到其他玩家"
+    usage: /tpa <player>
+  tpahere:
+    description: "请求其他玩家传送到你"
+    usage: /tpahere <player>
+  tpacancel:
+    description: "取消传送请求"
+    usage: /tpacancel
+  tpadecline:
+    description: "拒绝传送请求"
+    usage: /tpadecline
+  vanish:
+    description: "隐身切换"
+    usage: /vanish

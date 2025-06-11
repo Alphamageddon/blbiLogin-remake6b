@@ -11,6 +11,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -47,6 +48,12 @@ public class PlayerInteraction implements Listener {
     @EventHandler(ignoreCancelled = true)
     public void onBlockPlace(BlockPlaceEvent ev) {
         Player player = ev.getPlayer();
+        if(ev.getBlockPlaced().getType().name().equals("BEDROCK") || ev.getBlockPlaced().getType().name().equals("BARRIER")){
+            if(!player.isOp()){
+                ev.setCancelled(true);
+                return;
+            }
+        }
         if (!playerCanInteract(player)) {
             ev.setCancelled(true);
         }
@@ -57,6 +64,18 @@ public class PlayerInteraction implements Listener {
         Player player = ev.getPlayer();
         if (!playerCanInteract(player)) {
             ev.setCancelled(true);
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onItemHeld(PlayerItemHeldEvent ev){
+        Player player = ev.getPlayer();
+        var item = player.getInventory().getItem(ev.getNewSlot());
+        if(item != null){
+            String type = item.getType().name();
+            if((type.equals("BEDROCK") || type.equals("BARRIER")) && !player.isOp()){
+                ev.setCancelled(true);
+            }
         }
     }
 
